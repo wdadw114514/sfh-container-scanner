@@ -180,7 +180,7 @@ public final class ContainerScannerModule extends IRender2DColoredModule {
         }
         double radiusValue = radius.get();
         double radiusSq = radiusValue * radiusValue;
-        Vec3d playerPos = mc.player.getPos();
+        Vec3d playerPos = mc.player.getEntityPos();
         int chunkRadius = Math.max(1, (int) Math.ceil(radiusValue / 16.0D));
         ChunkPos center = mc.player.getChunkPos();
         Map<ContainerPosition, ContainerInfo> unique = new LinkedHashMap<>();
@@ -195,7 +195,7 @@ public final class ContainerScannerModule extends IRender2DColoredModule {
                 if (!typeFilter.get().test(blockEntity.getType())) {
                     continue;
                 }
-                if (pos.getSquaredDistance(playerPos.x, playerPos.y, playerPos.z) > radiusSq) {
+                if (distanceSq(pos, playerPos) > radiusSq) {
                     continue;
                 }
                 ContainerPosition containerPosition = resolveContainerPosition(pos, blockEntity);
@@ -222,7 +222,7 @@ public final class ContainerScannerModule extends IRender2DColoredModule {
 
     private ContainerInfo createInfo(
             BlockPos pos, BlockEntity blockEntity, ContainerPosition containerPosition, Vec3d playerPos) {
-        double distance = Math.sqrt(pos.getSquaredDistance(playerPos.x, playerPos.y, playerPos.z));
+        double distance = Math.sqrt(distanceSq(pos, playerPos));
         Text displayName = blockEntity.getCachedState().getBlock().getName();
         ChestHistory history = ChestHistory.INSTANCE;
         ChestHistory.Entry cache = null;
@@ -236,6 +236,13 @@ public final class ContainerScannerModule extends IRender2DColoredModule {
         Text summary = cache == null ? null : buildSummary(cache);
         return new ContainerInfo(
                 pos, containerPosition, displayName, distance, summary, containerPosition.getBoundingBox());
+    }
+
+    private static double distanceSq(BlockPos pos, Vec3d vec) {
+        double dx = pos.getX() + 0.5D - vec.x;
+        double dy = pos.getY() + 0.5D - vec.y;
+        double dz = pos.getZ() + 0.5D - vec.z;
+        return dx * dx + dy * dy + dz * dz;
     }
 
     private Text buildSummary(ChestHistory.Entry entry) {
