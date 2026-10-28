@@ -1,0 +1,24 @@
+{
+	"schemaVersion": 1,
+	"id": "sfh_container_scanner",
+	"version": "${version}",
+	"name": "SlimefunHelper Container Scanner",
+	"description": "区域容器扫描附属：扫描附近容器、ESP 高亮并显示已缓存内容",
+	"authors": [
+		"wdadw114514"
+	],
+	"license": "CC0-1.0",
+	"environment": "client",
+	"entrypoints": {
+		"slimefunhelper": [
+			"me.matl114.addon.containerscanner.ContainerScannerAddon"
+		]
+	},
+	"depends": {
+		"fabricloader": ">=0.15.1",
+		"minecraft": "1.21.11",
+		"java": ">=21",
+		"fabric-api": "*",
+		"slimefunhelper": ">=1.2.1.1"
+	}
+}
