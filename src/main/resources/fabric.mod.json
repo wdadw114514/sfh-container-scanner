@@ -3,7 +3,7 @@
 	"id": "sfh_container_scanner",
 	"version": "${version}",
 	"name": "SlimefunHelper Container Scanner",
-	"description": "区域容器扫描附属：扫描附近容器、ESP 高亮并显示已缓存内容",
+	"description": "Container scanner addon for SlimefunHelper: scans nearby containers, ESP highlight and cached contents",
 	"authors": [
 		"wdadw114514"
 	],
